@@ -18,7 +18,7 @@ class PatientData(BaseModel):
 
 
 model = joblib.load("models/rf_diabetes_model.pkl")
-scaler = joblib.load("models/rf_diabetes_scaler.pkl")
+# scaler = joblib.load("models/rf_diabetes_scaler.pkl")
 
 
 @app.post("/predict")
@@ -36,8 +36,10 @@ def predict_diabetes(data: PatientData):
         ]
     ]
 
-    input_scaled = scaler.transform(input_data)
+    # input_scaled = scaler.transform(input_data)
+    # prediction = model.predict(input_scaled)
 
-    prediction = model.predict(input_scaled)
+    # Pipeline handles preprocessing and inference in one call.
+    prediction = model.predict(input_data)
 
     return "Diabetic" if prediction[0] == 1 else "Non-Diabetic"
